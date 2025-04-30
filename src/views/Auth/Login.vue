@@ -19,6 +19,7 @@
 
 <script>
 import AuthService from '@/services/AuthService'
+import router from '@/router'
 
 export default {
     data() {
@@ -35,7 +36,9 @@ export default {
             try {
                 const response = await AuthService.login(this.user.email, this.user.password)
                 console.log("Inicio de sesion ", response.data)
+                localStorage.setItem('token', response.data.token)
                 this.message = "Inicio de sesión exitoso. Redirigiendo..."
+                router.push('/bookstore')
             } catch (error) {
                 console.error("Error en el inicio de sesion:", error)
                 this.message = "Usuario o contra incorrectos" + error
